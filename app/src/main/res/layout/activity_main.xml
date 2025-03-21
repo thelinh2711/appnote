@@ -1,19 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".MainActivity">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        tools:ignore="MissingConstraints">
+        <!-- Tiêu đề Notes -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <!-- Nút tìm kiếm -->
+        <ImageButton
+            android:id="@+id/btnSearch"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/bg_gray_rounded"
+            android:src="@drawable/ic_search"
+            app:tint="@color/white"
+            android:scaleType="centerInside"
+            android:padding="5dp"
+            android:layout_marginEnd="10dp"/>
 
+        <!-- Nút chế độ tối -->
+        <ImageButton
+            android:id="@+id/btnClock"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/bg_gray_rounded"
+            android:src="@drawable/ic_clock"
+            app:tint="@color/white"
+            android:scaleType="centerInside"
+            android:padding="5dp"
+            />
+    </LinearLayout>
+
+    <!-- Hình ảnh minh họa khi chưa có ghi chú -->
+    <ImageView
+        android:id="@+id/ivEmptyState"
+        android:layout_width="250dp"
+        android:layout_height="180dp"
+        android:src="@drawable/empty_notes"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <!-- Text hướng dẫn -->
     <TextView
+        android:id="@+id/tvEmptyState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Create your first note !"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/ivEmptyState"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!-- Nút FloatingActionButton để thêm ghi chú -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddNote"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/white"
+        app:tint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="32dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
