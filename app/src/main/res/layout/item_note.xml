@@ -47,7 +47,7 @@
 
         <!-- Nút xoá ghi chú -->
         <ImageButton
-            android:id="@+id/btnSearch"
+            android:id="@+id/btnDelete"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/bg_gray_rounded"
