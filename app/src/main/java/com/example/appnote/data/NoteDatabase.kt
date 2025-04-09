@@ -13,13 +13,13 @@ import androidx.room.RoomDatabase
 abstract class NoteDatabase:RoomDatabase() {
 
     // Khai báo DAO để Room tự tạo implementation
-    abstract fun noteDao():NoteDAO
+    abstract fun noteDao():NoteDao
 
     companion object {
         @Volatile
         private var INSTANCE: NoteDatabase? = null
 
-        fun getInstance(context: Context): Any {
+        fun getInstance(context: Context): NoteDatabase {
             return INSTANCE ?: synchronized(this){
                 var instance = Room.databaseBuilder(
                     context.applicationContext,

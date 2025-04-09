@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface NoteDAO {
+interface NoteDao {
     @Insert
     fun insert(note: Note)
 

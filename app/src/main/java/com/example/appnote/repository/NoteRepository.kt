@@ -1,9 +1,9 @@
 package com.example.appnote.repository
 
 import com.example.appnote.data.Note
-import com.example.appnote.data.NoteDAO
+import com.example.appnote.data.NoteDao
 
-class NoteRepository(private val noteDAO: NoteDAO) {
+class NoteRepository(private val noteDAO: NoteDao) {
     fun getAllNotes(): List<Note> {
         return noteDAO.getAllNotes()
     }

@@ -32,8 +32,8 @@
         <!-- Nút tìm kiếm -->
         <ImageButton
             android:id="@+id/btnSearch"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@drawable/bg_gray_rounded"
             android:src="@drawable/ic_search"
             app:tint="@color/white"
@@ -44,8 +44,8 @@
         <!-- Nút chế độ tối -->
         <ImageButton
             android:id="@+id/btnClock"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@drawable/bg_gray_rounded"
             android:src="@drawable/ic_clock"
             app:tint="@color/white"
@@ -53,7 +53,20 @@
             android:padding="5dp"
             />
     </LinearLayout>
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tvEmptyState"
+        app:layout_constraintBottom_toTopOf="@id/fabAddNote"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
     <!-- Hình ảnh minh họa khi chưa có ghi chú -->
     <ImageView
         android:id="@+id/ivEmptyState"
