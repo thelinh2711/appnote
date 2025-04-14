@@ -8,6 +8,7 @@
     android:background="@color/black"
     tools:context=".MainActivity">
     <LinearLayout
+        android:id="@+id/headerBar"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +63,7 @@
         android:paddingEnd="20dp"
         android:layout_marginTop="12dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tvEmptyState"
+        app:layout_constraintTop_toBottomOf="@id/headerBar"
         app:layout_constraintBottom_toTopOf="@id/fabAddNote"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

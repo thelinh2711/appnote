@@ -1,5 +1,6 @@
 package com.example.appnote.ui
 
+import android.app.Activity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.appnote.R
+import com.example.appnote.data.Note
+import com.example.appnote.data.NoteDatabase
 
 class AddEditNoteActivity : AppCompatActivity() {
     private lateinit var etTitle: EditText
@@ -35,7 +38,20 @@ class AddEditNoteActivity : AppCompatActivity() {
 
             if(title.isEmpty() && content.isEmpty()){
                 Toast.makeText(this, "Vui lòng nhập tiêu đề hoặc nội dung", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+            val note = Note(title=title, content = content)
+            Thread {
+                NoteDatabase.getInstance(this).noteDao().insert(note)
+                runOnUiThread {
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
+            }.start()
+        }
+
+        btnBack.setOnClickListener {
+            finish()
         }
     }
 }
