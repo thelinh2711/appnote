@@ -3,6 +3,7 @@ package com.example.appnote.ui
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -23,6 +24,18 @@ class AddEditNoteActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        
+        etTitle = findViewById(R.id.etTitle)
+        etContent = findViewById(R.id.etContent)
+        btnSave = findViewById(R.id.btnSave)
+        btnBack = findViewById(R.id.btnBack)
+
+        btnSave.setOnClickListener {
+            val title = etTitle.text.toString().trim()
+            val content = etContent.text.toString().trim()
+
+            if(title.isEmpty() && content.isEmpty()){
+                Toast.makeText(this, "Vui lòng nhập tiêu đề hoặc nội dung", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

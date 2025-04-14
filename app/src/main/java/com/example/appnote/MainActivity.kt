@@ -1,16 +1,13 @@
 package com.example.appnote
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputBinding
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.appnote.data.Note
 import com.example.appnote.data.NoteDatabase
 import com.example.appnote.databinding.ActivityMainBinding
 import com.example.appnote.repository.NoteRepository
@@ -20,10 +17,11 @@ import com.example.appnote.viewmodel.NoteViewModel
 import com.example.appnote.viewmodel.NoteViewModelFactory
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var noteAdapter: NoteAdapter
 
-    private val viewModel: NoteViewModel by viewModels{
+    private val viewModel: NoteViewModel by viewModels {
         NoteViewModelFactory(
             NoteRepository(
                 NoteDatabase.getInstance(this).noteDao()
@@ -31,26 +29,31 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup RecyclerView
+        // Adapter setup
         noteAdapter = NoteAdapter(
-            notes = TODO(),
-            onNoteClick = TODO(),
-            onDeleteClick = TODO()
+            notes = listOf(),
+            onNoteClick = { note ->
+                Toast.makeText(this, "Click: ${note.title}", Toast.LENGTH_SHORT).show()
+                // TODO: mở AddEditNoteActivity để sửa nếu muốn
+            },
+            onDeleteClick = { note ->
+                viewModel.deleteNote(note)
+            }
         )
+
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = noteAdapter
         }
 
-        viewModel.notes.observe(this) {notes ->
+        // Quan sát dữ liệu từ ViewModel
+        viewModel.notes.observe(this) { notes ->
             if (notes.isNullOrEmpty()) {
                 binding.recyclerView.visibility = View.GONE
                 binding.ivEmptyState.visibility = View.VISIBLE
@@ -63,28 +66,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Load ghi chú ban đầu
+        // Tải dữ liệu ban đầu
         viewModel.loadNotes()
 
-        // Sự kiện thêm ghi chú mới
+        // Sự kiện nút thêm
         binding.fabAddNote.setOnClickListener {
-            val intent = Intent(this, AddEditNoteActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, AddEditNoteActivity::class.java))
         }
 
-        // (Optional) nút tìm kiếm
+        // Nút tìm kiếm (chưa làm)
         binding.btnSearch.setOnClickListener {
-            // TODO: mở search UI hoặc filter
+            Toast.makeText(this, "Chức năng tìm kiếm chưa được triển khai", Toast.LENGTH_SHORT).show()
         }
 
-        // (Optional) nút đồng hồ
+        // Nút đồng hồ (chưa làm)
         binding.btnClock.setOnClickListener {
-            // TODO: mở đồng hồ hoặc hiển thị thời gian
+            Toast.makeText(this, "Đồng hồ hiện chưa hoạt động", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadNotes() // Reload khi quay về màn chính
+        viewModel.loadNotes()
     }
 }

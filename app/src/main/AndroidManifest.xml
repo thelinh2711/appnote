@@ -12,24 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppNote"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.AddEditNoteActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <!-- ✅ Đây là activity khởi động chính -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- ❌ KHÔNG để intent-filter ở đây -->
+        <activity
+            android:name=".ui.AddEditNoteActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
