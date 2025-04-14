@@ -47,4 +47,10 @@ class NoteAdapter(
             onDeleteClick(note)
         }
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newNotes: List<Note>) {
+        this.notes = newNotes
+        notifyDataSetChanged()
+    }
 }
