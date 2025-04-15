@@ -39,8 +39,12 @@ class MainActivity : AppCompatActivity() {
         noteAdapter = NoteAdapter(
             notes = listOf(),
             onNoteClick = { note ->
-                Toast.makeText(this, "Click: ${note.title}", Toast.LENGTH_SHORT).show()
-                // TODO: mở AddEditNoteActivity để sửa nếu muốn
+                val intent = Intent(this, AddEditNoteActivity::class.java).apply {
+                    putExtra("note_id", note.id)
+                    putExtra("note_title", note.title)
+                    putExtra("note_content", note.content)
+                }
+                startActivity(intent)
             },
             onDeleteClick = { note ->
                 viewModel.deleteNote(note)

@@ -32,6 +32,15 @@ class AddEditNoteActivity : AppCompatActivity() {
         btnSave = findViewById(R.id.btnSave)
         btnBack = findViewById(R.id.btnBack)
 
+        val noteId = intent.getIntExtra("note_id", -1)
+        val noteTitle = intent.getStringExtra("note_title") ?: ""
+        val noteContent = intent.getStringExtra("note_content") ?: ""
+
+        // Nếu là ghi chú có sẵn → hiển thị
+        if (noteId != -1) {
+            etTitle.setText(noteTitle)
+            etContent.setText(noteContent)
+        }
         btnSave.setOnClickListener {
             val title = etTitle.text.toString().trim()
             val content = etContent.text.toString().trim()
