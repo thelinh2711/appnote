@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appnote.data.Note
@@ -47,7 +48,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             },
             onDeleteClick = { note ->
-                viewModel.deleteNote(note)
+                AlertDialog.Builder(this)
+                    .setTitle("Xoá ghi chú?")
+                    .setMessage("Bạn có chắc chắn muốn xoá ghi chú \"${note.title}\" không?")
+                    .setPositiveButton("Xoá") { _, _ ->
+                        viewModel.deleteNote(note)
+                    }
+                    .setNegativeButton("Huỷ", null)
+                    .show()
             }
         )
 

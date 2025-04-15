@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.appnote.R
 import com.example.appnote.data.Note
 import com.example.appnote.data.NoteDatabase
-import java.util.concurrent.Executors
+import com.example.appnote.repository.NoteRepository
+import com.example.appnote.viewmodel.NoteViewModel
+import com.example.appnote.viewmodel.NoteViewModelFactory
 
 class AddEditNoteActivity : AppCompatActivity() {
     private lateinit var etTitle: EditText
@@ -21,6 +21,12 @@ class AddEditNoteActivity : AppCompatActivity() {
     private lateinit var btnSave: ImageButton
     private lateinit var btnBack: ImageButton
     private var noteId: Int = -1
+
+    private val viewModel: NoteViewModel by viewModels {
+        NoteViewModelFactory(
+            NoteRepository(NoteDatabase.getInstance(this).noteDao())
+        )
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,13 +67,9 @@ class AddEditNoteActivity : AppCompatActivity() {
 
             if(noteId==-1){
                 //Thêm ghi chú mới
-                Thread {
-                    NoteDatabase.getInstance(this).noteDao().insert(note)
-                    runOnUiThread {
-                        setResult(Activity.RESULT_OK)
-                        finish()
-                    }
-                }.start()
+                viewModel.addNote(note)
+                setResult(Activity.RESULT_OK)
+                finish()
             } else {
                 //cập nhật note
                 showUpdateConfirmation(note)
@@ -79,21 +81,19 @@ class AddEditNoteActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    private fun AddEditNoteActivity.showUpdateConfirmation(note: Note) {
+        AlertDialog.Builder(this)
+            .setTitle("Cập nhật ghi chú?")
+            .setMessage("Bạn có chắc chắn muốn thay đổi nội dung này không?")
+            .setPositiveButton("Thay đổi") {_, _, ->
+                viewModel.updateNote(note)
+                setResult(Activity.RESULT_OK)
+                finish()
+            }
+            .setNegativeButton("Hủy", null)
+            .show()
+    }
 }
 
-private fun AddEditNoteActivity.showUpdateConfirmation(note: Note) {
-    AlertDialog.Builder(this)
-        .setTitle("Cập nhật ghi chú?")
-        .setMessage("Bạn có chắc chắn muốn ghi đè nội dung cũ không?")
-        .setPositiveButton("Cập nhật") {_, _, ->
-            Thread {
-                NoteDatabase.getInstance(this).noteDao().update(note)
-                runOnUiThread {
-                    setResult(Activity.RESULT_OK)
-                    finish()
-                }
-            }.start()
-        }
-        .setNegativeButton("Hủy", null)
-        .show()
-}
+
