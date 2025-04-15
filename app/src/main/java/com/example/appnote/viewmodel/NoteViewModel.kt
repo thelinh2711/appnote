@@ -47,8 +47,16 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
         }
     }
 
+    fun updateNote(note: Note){
+        customScope.launch {
+            repository.update(note)
+            loadNotes()
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         customScope.cancel()
     }
+
 }

@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface NoteDao {
@@ -12,6 +13,9 @@ interface NoteDao {
 
     @Delete
     fun delete(note: Note)
+
+    @Update
+    fun update(note: Note)
 
     @Query("SELECT * FROM notes ORDER BY created_time DESC")
     fun getAllNotes() : List<Note>

@@ -16,6 +16,9 @@ class NoteRepository(private val noteDAO: NoteDao) {
         noteDAO.delete(note)
     }
 
+    fun update(note: Note){
+        noteDAO.update(note)
+    }
     fun searchNotes(keyword: String):List<Note>{
         return noteDAO.searchNotes("%$keyword%")
     }
